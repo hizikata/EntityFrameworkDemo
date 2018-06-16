@@ -4,9 +4,77 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EntityFrameworkDemo"
-        mc:Ignorable="d"
+        mc:Ignorable="d" DataContext="{Binding Source={StaticResource locator}, Path=Main}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <StackPanel  Orientation="Horizontal">
+                <TextBlock Text="姓名"/>
+                <ComboBox Name="cmbName" Width="120" ItemsSource="{Binding Name}"/>
+                <Button Content="搜索" Command="{Binding Search}" CommandParameter="{Binding ElementName=cmbName, Path=SelectedItem}"/>
+                <Button Content="导出"  Command="{Binding Export}"/>
+            </StackPanel>
+        </StackPanel>
+   
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="更新" Command="{Binding Update}" 
+                        CommandParameter="{Binding ElementName=lview, Path=SelectedItem}"/>
+                <Button Content="删除" Command="{Binding Delete}"
+                        CommandParameter="{Binding ElementName=lview, Path=SelectedItem}"/>
+                <Button Content="插入" Command="{Binding Insert}"
+                        CommandParameter="{Binding ElementName=lview, Path=SelectedItem}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" DataContext="{Binding ElementName=lview, Path=SelectedItem}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="ID:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Alternate:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Education:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Address:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Email:" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Remark:" HorizontalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding ID}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Name}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Phone}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Alternate}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Education}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Address}"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Email}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Width="120" HorizontalAlignment="Left" Text="{Binding Remark}"/>
+            </Grid>
+        </StackPanel>
+        <ListView x:Name="lview" DockPanel.Dock="Bottom"  ItemsSource="{Binding DisplayInfo}"
+                  IsHitTestVisible="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
+                    <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="电话号码" DisplayMemberBinding="{Binding Phone}"/>
+                    <GridViewColumn Header="班别" DisplayMemberBinding="{Binding Alternate}"/>
+                    <GridViewColumn Header="学历" DisplayMemberBinding="{Binding Education}"/>
+                    <GridViewColumn Header="地址" DisplayMemberBinding="{Binding Address}"/>
+                    <GridViewColumn Header="邮箱" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="备注" DisplayMemberBinding="{Binding Remark}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         
-    </Grid>
+    </DockPanel>
 </Window>
